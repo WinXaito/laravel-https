@@ -21,17 +21,49 @@ class LaravelHttpsServiceProvider extends ServiceProvider{
     protected $defer = false;
 
     /**
+     * Location of package config file
+     *
+     * @var string
+     */
+    protected $configPath = __DIR__ . '/../config/https-redirection.php';
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register() {
+        $this->mergeConfigFrom($this->configPath, 'https-redirection');
+    }
+
+    /**
      * Bootstrap any application services.
      *
      * @return void
      */
-    public function boot(){
+    public function boot() {
         //Publishes
-        $this->publishes([
-            __DIR__.'/config/installer.php' => config_path('https-redirection.php'),
-        ], 'config');
+        $this->publishes([$this->configPath => $this->getConfigPath()], 'config');
 
         //Middleware
         $this->app['Illuminate\Contracts\Http\Kernel']->pushMiddleware('WinXaito\LaravelHttpsRedirect\Http\Middleware\HttpsRedirection');
+    }
+
+    /**
+     * Get the config path
+     *
+     * @return string
+     */
+    protected function getConfigPath() {
+        return config_path('https-redirection.php');
+    }
+
+    /**
+     * Publish the config file
+     *
+     * @param  string $configPath
+     */
+    protected function publishConfig($configPath) {
+        $this->publishes([$configPath => config_path('debugbar.php')], 'config');
     }
 }
