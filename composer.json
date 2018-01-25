@@ -1,15 +1,19 @@
 {
     "name": "winxaito/laravel-https",
     "description": "Redirects http requests to https according to the configuration",
+    "keywords": ["laravel", "https", "redirect", "https-redirect"],
+    "homepage": "https://github.com/WinXaito/laravel-https",
     "type": "library",
-    "license": "GNU GPL3",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "WinXaito",
             "email": "mail@winxaito.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">=7.0.0"
+    },
     "autoload": {
         "psr-4": {
             "WinXaito\\LaravelHttpsRedirect\\": "src/"
